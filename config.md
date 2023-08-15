@@ -113,8 +113,8 @@ List of flags to append to the compile command.
 List of flags to remove from the compile command.
 
 - If the value is a recognized clang flag (like `-I`) then it will be
-  removed along with any arguments. Synonyms like `--include-dir=` will
-  also be removed.
+  removed along with any arguments. Synonyms like `--include-directory=`
+  will also be removed.
 - Otherwise, if the value ends in `*` (like `-DFOO=*`) then any argument
   with the prefix will be removed.
 - Otherwise any argument exactly matching the value is removed.
@@ -191,6 +191,18 @@ Index:
 - Declaring an `External` index disables background-indexing implicitly for
   files under the `MountPoint`. Users can turn it back on, by explicitly
   mentioning `Background: Build` in a later fragment.
+
+### StandardLibrary
+{:.v15}
+
+Controls whether clangd eagerly indexes the standard library (to give
+code completions of standard library symbols on an empty file). Sample block
+(default).
+
+```
+Index:
+  StandardLibrary: No
+```
 
 ## Style
 
@@ -291,6 +303,7 @@ Configures the behaviour of the inlay-hints feature. Sample block (default):
 
 ```yaml
 InlayHints:
+  Designators: Yes
   Enabled: Yes
   ParameterNames: Yes
   DeducedTypes: Yes
@@ -312,6 +325,11 @@ calls.
 {:.v14}
 
 A boolean that enables/disables inlay-hints for deduced types.
+
+### Designators
+{:.v14}
+
+A boolean that enables/disables inlay-hints for designators in aggregate initialization. (eg: `Designators: true`: `std::vector<int> arr = {[0]= 1, [1]= 2}` ; `Designators: false`: `std::vector<int> arr = {1, 2}`)
 
 ## Hover
 {:.v14}
